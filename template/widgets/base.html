@@ -78,16 +78,16 @@
             <aside id="sidebar" class="sidebar">
                 <div class="sidebar-inner affix-top">
                     <section class="site-overview sidebar-panel sidebar-panel-active">
-                        <div class="site-author motion-element" itemprop="author" itemscope
+                        <div class="site-author motion-element" itemprop="{{.author}}" itemscope
                              itemtype="http://schema.org/Person">
                             <img class="site-author-image"
                                  src="https://avatar.boiko.cn/avatar/dd9eea1607c18dd222db3f0f1b14ca66?s=70&d=mm&r=g"
-                                 alt="Aimuz" itemprop="image"/>
+                                 alt="{{.author}}" itemprop="image"/>
                             <p class="site-author-name" itemprop="name">
-                                Aimuz
+                                {{.author}}
                             </p>
                             <p class="site-description motion-element" itemprop="description">
-                                一本正经，胡说八道
+                                {{.authorDescription}}
                             </p>
                         </div>
                         <nav class="site-state motion-element">
@@ -111,16 +111,15 @@
                             </div>
                         </nav>
                         <div class="feed-link motion-element">
-                            <a href="https://aimuz.me/feed/" rel="alternate"><i class="fa fa-rss"></i> RSS </a>
+                            <a href="https://aimuz.me/feed/" rel="alternate"><i class="fa fa-rss"></i>RSS</a>
                         </div>
                         <div class="links-of-author motion-element">
                             <span class="links-of-author-item">
                                 <a href="https://github.com/aimuz" target="_blank"><i
-                                            class="fa fa-github"></i>GitHub </a>
+                                            class="fa fa-github"></i>GitHub</a>
                             </span>
                             <span class="links-of-author-item">
-                                <a href="https://www.zhihu.com/people/Aimuz" target="_blank"><i
-                                            class="fa fa-globe"></i>知乎 </a>
+                                <a href="https://www.zhihu.com/people/Aimuz" target="_blank"><i class="fa fa-globe"></i>知乎</a>
                             </span>
                         </div>
                         <div class="motion-element">
