@@ -48,26 +48,31 @@
             </div>
             <nav class="site-nav">
                 <ul id="menu" class="menu ">
-                    <li class="menu-item menu-item-home"><a href="https://aimuz.me/" rel="section"><i
-                                    class="menu-item-icon fa fa-home fa-fw"></i><br/> 首页 </a></li>
-                    <li class="menu-item menu-item-categories"><a href="https://aimuz.me/categories.html" rel="section">
-                            <i class="menu-item-icon fa fa-fw fa-folder-open"></i><br/> 分类 </a></li>
-                    <li class="menu-item menu-item-archive"><a href="https://aimuz.me/archive.html" rel="section"><i
-                                    class="menu-item-icon fa fa-fw fa-archive"></i><br/> 归档 </a></li>
-                    <li class="menu-item menu-item-about"><a href="https://aimuz.me/about.html" rel="section"><i
-                                    class="menu-item-icon fa fa-fw fa-user"></i><br/> 关于 </a></li>
-                    <li class="menu-item menu-item-search"><a href="/search" class="st-search-show-outputs"><i
-                                    class="menu-item-icon fa fa-search fa-fw"></i><br>
-                            搜索
-                        </a>
-                        <div class="site-search">
-                            <form class="site-search-form">
-                                <input type="text" id="st-search-input" name="s"
-                                       class="st-search-input st-default-search-input" autocomplete="off"
-                                       autocorrect="off" autocapitalize="off" placeholder="想搜啥？" value=""/>
-                            </form>
-                        </div>
-                    </li>
+                    {{range $_,$menu := .menus}}
+                        <li class="menu-item {{$menu.class}}">
+                            <a href="{{$menu.url}}" rel="section"><i class="menu-item-icon fa fa-fw {{$menu.icon}}"></i><br/>
+                                {{$menu.name}} </a>
+                        </li>
+                    {{end}}
+                   {{/**/}}
+                    {{/*<li class="menu-item menu-item-categories"><a href="https://aimuz.me/categories.html" rel="section">*/}}
+                            {{/*<i class="menu-item-icon fa fa-fw fa-folder-open"></i><br/> 分类 </a></li>*/}}
+                    {{/*<li class="menu-item menu-item-archive"><a href="https://aimuz.me/archive.html" rel="section"><i*/}}
+                                    {{/*class="menu-item-icon fa fa-fw fa-archive"></i><br/> 归档 </a></li>*/}}
+                    {{/*<li class="menu-item menu-item-about"><a href="https://aimuz.me/about.html" rel="section"><i*/}}
+                                    {{/*class="menu-item-icon fa fa-fw fa-user"></i><br/> 关于 </a></li>*/}}
+                    {{/*<li class="menu-item menu-item-search"><a href="/search" class="st-search-show-outputs"><i*/}}
+                                    {{/*class="menu-item-icon fa fa-search fa-fw"></i><br>*/}}
+                            {{/*搜索*/}}
+                        {{/*</a>*/}}
+                        {{/*<div class="site-search">*/}}
+                            {{/*<form class="site-search-form">*/}}
+                                {{/*<input type="text" id="st-search-input" name="s"*/}}
+                                       {{/*class="st-search-input st-default-search-input" autocomplete="off"*/}}
+                                       {{/*autocorrect="off" autocapitalize="off" placeholder="想搜啥？" value=""/>*/}}
+                            {{/*</form>*/}}
+                        {{/*</div>*/}}
+                    {{/*</li>*/}}
                 </ul>
             </nav>
         </div>
@@ -75,7 +80,10 @@
     <main id="main" class="main">
         <div class="main-inner">
             <div class="content-wrap">
-                <div id="content" class="content">{{template "content" .}}</div>
+                <div id="content" class="content">
+                    <!-- 内容块 -->
+                    {{template "content" .}}
+                </div>
             </div>
             <div class="sidebar-toggle">
                 <div class="sidebar-toggle-line-wrap">
