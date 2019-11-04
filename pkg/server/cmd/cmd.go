@@ -1,13 +1,14 @@
 package cmd
 
 import (
+	"os"
+	"path/filepath"
+	"time"
+
 	"github.com/aimuz/fishecho/pkg/config"
 	"github.com/aimuz/fishecho/pkg/version"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"os"
-	"path/filepath"
-	"time"
 )
 
 func NewServerDefaultCommand() *cobra.Command {

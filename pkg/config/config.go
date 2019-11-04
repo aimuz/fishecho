@@ -2,11 +2,12 @@ package config
 
 import (
 	"context"
-	"github.com/aimuz/fishecho/pkg/register"
-	"github.com/spf13/viper"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/aimuz/fishecho/pkg/register"
+	"github.com/spf13/viper"
 )
 
 // config file

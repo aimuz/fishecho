@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+
 	"github.com/aimuz/fishecho/pkg/register"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"

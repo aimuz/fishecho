@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+
 	"github.com/aimuz/fishecho/pkg/server"
 	"github.com/aimuz/fishecho/pkg/server/cmd"
 	"github.com/aimuz/fishecho/pkg/version"
