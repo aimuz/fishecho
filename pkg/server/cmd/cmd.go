@@ -10,11 +10,12 @@ import (
 	"time"
 )
 
-func NewDefaultCommand() *cobra.Command {
+func NewServerDefaultCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     filepath.Base(os.Args[0]),
-		Short:   filepath.Base(os.Args[0]) + " is blog server",
-		Long:    `Complete documentation is available at github.com`,
+		Use:   filepath.Base(os.Args[0]),
+		Short: filepath.Base(os.Args[0]) + " is blog server",
+		Long: `Support seamless upgrade from Typecho
+Complete documentation is available at github.com/aimuz/fishecho`,
 		Version: version.Version + " gitCommit " + version.GitCommit,
 	}
 	cmd.Flags().StringP(config.ServerHTTPAddr, "H", "0.0.0.0", "server http addr")
