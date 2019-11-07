@@ -2,11 +2,6 @@ package config
 
 import (
 	"context"
-	"os"
-	"path/filepath"
-	"strings"
-
-	"github.com/aimuz/fishecho/pkg/register"
 	"github.com/spf13/viper"
 )
 
@@ -17,9 +12,9 @@ const (
 
 // server config
 const (
-	ServerHTTPAddr = "server.http.addr"
-	ServerHTTPPort = "server.http.port"
-	ServerGzip     = "server.gzip"
+	ServerHTTPAddr = "server.http-addr"
+	ServerHTTPPort = "server.http-port"
+	ServerHTTPGzip = "server.http-gzip"
 )
 
 // logger config
@@ -37,36 +32,38 @@ const (
 	DatabaseUser            = "database.user"
 	DatabasePassword        = "database.password"
 	DatabaseURL             = "database.url"
-	DatabaseMaxIdleConn     = "database.max.conn.idle"
-	DatabaseMaxOpenConn     = "database.max.conn.open"
-	DatabaseConnMaxLifetime = "database.max.conn.lifetime"
-	DatabaseLogQueries      = "database.log.queries"
+	DatabaseMaxIdleConn     = "database.max-conn-idle"
+	DatabaseMaxOpenConn     = "database.max-conn-open"
+	DatabaseConnMaxLifetime = "database.max-conn-lifetime"
+	DatabaseLogQueries      = "database.log-queries"
 )
 
 // cache config
 const (
-	CacheType = "cache.type"
-	CacheURL  = "cache.url"
+	CacheType   = "cache.type"
+	CacheURL    = "cache.url"
+	CacheEnable = "cache.enable"
 )
 
-func init() {
-	viper.SetEnvPrefix("FE")
-	viper.AutomaticEnv()
-	viper.SetEnvKeyReplacer(strings.NewReplacer("_", "."))
-
-	register.Initer("config", Load)
+type Config struct {
+	Files    []string `yaml:"-"`
+	Server   Server   `yaml:"server"`
+	Logger   Logger   `yaml:"logger"`
+	Database Database `yaml:"database"`
+	Cache    Cache    `yaml:"cache"`
 }
 
-func Load(_ context.Context) error {
-	if filename := viper.GetString(File); len(filename) > 0 {
-		viper.SetConfigType(filepath.Ext(filename))
+type viperLoad interface {
+	viper() error
+}
 
-		f, err := os.Open(filename)
-		if err != nil {
-			return nil
-		}
-		defer f.Close()
-		err = viper.MergeConfig(f)
+func (c *Config) Load(ctx context.Context) error {
+	err := c.LoadWithViper(ctx)
+	if err != nil {
+		return err
+	}
+	if filename := viper.GetString(File); len(filename) > 0 {
+		err = c.LoadWithFiles(ctx, filename)
 		if err != nil {
 			return err
 		}
@@ -74,30 +71,28 @@ func Load(_ context.Context) error {
 	return nil
 }
 
-//func defaultConfig() {
-//	// server config default
-//	viper.SetDefault(ServerHTTPAddr, "0.0.0.0")
-//	viper.SetDefault(ServerHTTPPort, 3002)
-//	viper.SetDefault(ServerGzip, false)
-//
-//	// logger config default
-//	viper.SetDefault(LoggerLevel, "info")
-//	viper.SetDefault(LoggerOutput, "stderr")
-//	viper.SetDefault(LoggerFile, "")
-//
-//	// database config default
-//	viper.SetDefault(DatabaseType, "")
-//	viper.SetDefault(DatabaseHost, "")
-//	viper.SetDefault(DatabaseName, "fishecho")
-//	viper.SetDefault(DatabaseUser, "")
-//	viper.SetDefault(DatabasePassword, "")
-//	viper.SetDefault(DatabaseURL, "mysql://user:secret@host:port/database")
-//	viper.SetDefault(DatabaseMaxOpenConn, 0)
-//	viper.SetDefault(DatabaseMaxIdleConn, 2)
-//	viper.SetDefault(DatabaseConnMaxLifetime, time.Hour*4)
-//	viper.SetDefault(DatabaseLogQueries, false)
-//
-//	// cache config default
-//	viper.SetDefault(CacheType, "database")
-//	viper.SetDefault(CacheURL, "")
-//}
+// LoadWithViper load config with env or cli args
+func (c *Config) LoadWithViper(_ context.Context) error {
+	for _, v := range []viperLoad{&c.Server, &c.Logger, &c.Database, &c.Cache} {
+		if err := v.viper(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// LoadWithFiles load config with files
+func (c *Config) LoadWithFiles(_ context.Context, file string) error {
+	c.Files = append(c.Files, file)
+	return nil
+}
+
+// Reload
+func (c *Config) Reload(ctx context.Context) error {
+	return nil
+}
+
+func init() {
+	viper.SetEnvPrefix("FE")
+	viper.AutomaticEnv()
+}

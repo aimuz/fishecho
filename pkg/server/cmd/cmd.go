@@ -19,9 +19,9 @@ func NewServerDefaultCommand() *cobra.Command {
 Complete documentation is available at github.com/aimuz/fishecho`,
 		Version: version.Version + " gitCommit " + version.GitCommit,
 	}
-	cmd.Flags().StringP(config.ServerHTTPAddr, "H", "0.0.0.0", "server http addr")
-	cmd.Flags().StringP(config.ServerHTTPPort, "p", "3001", "server http port")
-	cmd.Flags().BoolP(config.ServerGzip, "g", false, "server enable gzip")
+	cmd.Flags().StringP(config.ServerHTTPAddr, "H", "0.0.0.0", "http server addr")
+	cmd.Flags().IntP(config.ServerHTTPPort, "p", 3001, "http server port")
+	cmd.Flags().BoolP(config.ServerHTTPGzip, "g", false, "http server enable gzip")
 
 	cmd.Flags().StringP(config.LoggerLevel, "v", "info", "logger level [debug info warn error fail]")
 	cmd.Flags().String(config.LoggerOutput, "stderr", "logger output [stderr stdout file]")
@@ -40,6 +40,7 @@ Complete documentation is available at github.com/aimuz/fishecho`,
 
 	cmd.Flags().String(config.CacheType, "database", "remote cache type[database redis]")
 	cmd.Flags().String(config.CacheURL, "", "remote cache url")
+	cmd.Flags().Bool(config.CacheEnable, false, "enable cache")
 
 	cmd.Flags().StringP(config.File, "c", "", "config file, support file format [YAML JSON INI]")
 

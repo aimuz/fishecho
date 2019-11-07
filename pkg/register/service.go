@@ -16,3 +16,7 @@ func (s *Service) Name() string {
 func (s *Service) Run(ctx context.Context) error {
 	return s.run(ctx)
 }
+
+type runnable interface {
+	Run(ctx context.Context) error
+}
